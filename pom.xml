@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>net.grzechocinski</groupId>
+	<artifactId>android-workshops</artifactId>
+	<version>0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<name>${project.artifactId}-${project.version}</name>
+
+	<developers>
+		<developer>
+			<name>Mateusz Grzechocinski</name>
+			<email>mateusz.grzechocinski@gmail.com</email>
+			<roles>
+				<role>Developer</role>
+			</roles>
+		</developer>
+	</developers>
+
+	<scm>
+		<connection>scm:git:${repo.url}</connection>
+		<developerConnection>scm:git:${repo.url}</developerConnection>
+		<url>${repo.url}</url>
+	</scm>
+
+	<modules>
+		<module>app</module>
+	</modules>
+
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>2.3.1</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-jar-plugin</artifactId>
+					<version>2.3.1</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-resources-plugin</artifactId>
+					<version>2.4.3</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-source-plugin</artifactId>
+					<version>2.1.2</version>
+				</plugin>
+				<plugin>
+					<groupId>com.jayway.maven.plugins.android.generation2</groupId>
+					<artifactId>maven-android-plugin</artifactId>
+					<version>2.8.4</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-release-plugin</artifactId>
+					<version>2.0</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-enforcer-plugin</artifactId>
+					<version>1.0-beta-1</version>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+		<plugins>
+			<plugin>
+				<groupId>com.jayway.maven.plugins.android.generation2</groupId>
+				<artifactId>maven-android-plugin</artifactId>
+				<configuration>
+					<deleteConflictingFiles>true</deleteConflictingFiles>
+					<sdk>
+						<path>${env.ANDROID_HOME}</path>
+						<platform>7</platform>
+					</sdk>
+					<sign>
+						<!-- We use different, keytool-generated key to sign apk -->
+						<debug>false</debug>
+					</sign>
+					<device>emulator</device>
+					<emulator>
+						<avd>${emulator}</avd>
+					</emulator>
+				</configuration>
+				<extensions>true</extensions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-release-plugin</artifactId>
+				<configuration>
+					<!-- Do zipalign when releasing app -->
+					<releaseProfiles>market</releaseProfiles>
+					<autoVersionSubmodules>true</autoVersionSubmodules>
+					<!-- Do not deploy site -->
+					<goals>install</goals>
+					<!-- Do not deploy sources and javadocs -->
+					<useReleaseProfile>false</useReleaseProfile>
+					<!--<preparationGoals>org.codehaus.groovy.maven:gmaven-plugin:execute</preparationGoals>-->
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>com.google.android</groupId>
+				<artifactId>android</artifactId>
+				<version>2.2.1</version>
+				<scope>provided</scope>
+			</dependency>
+			<dependency>
+				<groupId>junit</groupId>
+				<artifactId>junit</artifactId>
+				<version>4.10</version>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.easytesting</groupId>
+				<artifactId>fest-assert</artifactId>
+				<version>1.4</version>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.mockito</groupId>
+				<artifactId>mockito-all</artifactId>
+				<version>1.8.5</version>
+				<scope>test</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.easytesting</groupId>
+			<artifactId>fest-assert</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-all</artifactId>
+		</dependency>
+	</dependencies>
+
+	<profiles>
+		<profile>
+			<id>noinstrument</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<!-- any name, it's not used... -->
+			<properties>
+				<emulator>AndroidManifest1.5</emulator>
+			</properties>
+		</profile>
+	</profiles>
+
+	<properties>
+		<repo.url>git@github.com:mgrzechocinski/AndroidWorshops.git</repo.url>
+		<encoding.project>UTF-8</encoding.project>
+		<jdk.version>1.6</jdk.version>
+	</properties>
+</project>
