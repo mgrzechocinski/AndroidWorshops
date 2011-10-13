@@ -17,6 +17,7 @@
 			</intent-filter>
 		</activity>
 		<activity android:name=".activity.ResultsListActivity" android:label="@string/activity_title_results"/>
+		<activity android:name=".activity.StopwatchPreferenceActivity" android:label="@string/activity_title_preferences"/>
 		<service android:name=".service.StopwatchService"/>
 	</application>
 

@@ -13,4 +13,10 @@
 	<string name="activity_title_results">Zapisane wyniki</string>
 	<string name="results">Wyniki</string>
 
+	<string name="settings_stopwatch_title">Ustawienia stopera</string>
+	<string name="settings_stopwatch_color">Kolor</string>
+	<string name="preferences">Ustawienia</string>
+	<string name="activity_title_preferences">Ustawienia</string>
+	<string name="settings_stopwatch_color_summary">Wybierz kolor stopera</string>
+
 </resources>

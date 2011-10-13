@@ -1,0 +1,13 @@
+<resources>
+	<string-array name="settings_stopwatch_color_entry_values">
+		<item>WHITE</item>
+		<item>YELLOW</item>
+		<item>GREEN</item>
+	</string-array>
+
+	<string-array name="settings_stopwatch_color_entries">
+		<item>Biały</item>
+		<item>Żółty</item>
+		<item>Zielony</item>
+	</string-array>
+</resources>

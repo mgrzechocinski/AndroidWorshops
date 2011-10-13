@@ -4,8 +4,10 @@ import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -18,6 +20,7 @@ import java.util.TimeZone;
 import net.grzechocinski.android.stopwatch.R;
 import net.grzechocinski.android.stopwatch.StopWatchListener;
 import net.grzechocinski.android.stopwatch.service.StopwatchService;
+import net.grzechocinski.android.stopwatch.util.Color;
 
 
 /**
@@ -46,12 +49,19 @@ public class StopWatchActivity extends Activity implements StopWatchListener, Se
 		counter = (TextView) findViewById(R.id.counter);
 	}
 
+	private int loadColorFromPreferences() {
+		SharedPreferences prefManager = PreferenceManager.getDefaultSharedPreferences(this);
+		String settingsStopwatchColor = prefManager.getString("settingsStopwatchColor", "WHITE");
+		return getResources().getColor(Color.valueOf(settingsStopwatchColor).asResId());
+	}
+
 	@Override
 	protected void onResume() {
 		super.onResume();
 		Intent service = new Intent(this, StopwatchService.class);
 		startService(service);
 		bindService(service, this, 0); //no flags required in this case
+		counter.setTextColor(loadColorFromPreferences());
 	}
 
 	@Override
@@ -76,9 +86,12 @@ public class StopWatchActivity extends Activity implements StopWatchListener, Se
 
 	@Override
 	public boolean onMenuItemSelected(int featureId, MenuItem item) {
-		switch(item.getItemId()){
+		switch (item.getItemId()) {
 			case R.id.menu_results:
 				startActivity(new Intent(this, ResultsListActivity.class));
+				break;
+			case R.id.menu_preferences:
+				startActivity(new Intent(this, StopwatchPreferenceActivity.class));
 				break;
 		}
 		return true;

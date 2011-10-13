@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+		xmlns:android="http://schemas.android.com/apk/res/android"
+		android:title="@string/settings_stopwatch_title">
+
+	<ListPreference
+			android:key="settingsStopwatchColor"
+			android:title="@string/settings_stopwatch_color"
+			android:dialogTitle="@string/settings_stopwatch_color"
+			android:summary="@string/settings_stopwatch_color_summary"
+			android:entries="@array/settings_stopwatch_color_entries"
+			android:entryValues="@array/settings_stopwatch_color_entry_values"
+			android:defaultValue="WHITE"/>
+
+</PreferenceScreen>

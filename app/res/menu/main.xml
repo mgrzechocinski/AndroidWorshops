@@ -4,4 +4,7 @@
 	<item android:id="@+id/menu_results"
 		  android:icon="@drawable/ic_menu_results"
 		  android:title="@string/results"/>
+	<item android:id="@+id/menu_preferences"
+			  android:icon="@drawable/ic_menu_preference"
+			  android:title="@string/preferences"/>
 </menu>
