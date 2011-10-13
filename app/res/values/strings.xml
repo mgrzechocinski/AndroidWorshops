@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">StopWatch</string>
+
+	<string name="dialog_title_please_wait">Proszę czekać</string>
+	<string name="sorry">Przepraszamy</string>
+	<string name="close">Zamknij</string>
+	<string name="toast_press_back_one_more_time_to_finish">Naciśnij BACK jeszcze raz, aby wyjść z aplikacji</string>
+
+	<string name="button_start">Start</string>
+	<string name="button_stop">Stop</string>
+	<string name="button_reset">Reset</string>
+
 </resources>
