@@ -10,12 +10,13 @@
                  android:icon="@drawable/ic_app"
                  	android:debuggable="true">
 
-		<activity android:name=".StopWatchActivity">
+		<activity android:name=".activity.StopWatchActivity">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN"/>
 				<category android:name="android.intent.category.LAUNCHER"/>
 			</intent-filter>
 		</activity>
+		<activity android:name=".activity.ResultsListActivity" android:label="@string/activity_title_results"/>
 		<service android:name=".service.StopwatchService"/>
 	</application>
 

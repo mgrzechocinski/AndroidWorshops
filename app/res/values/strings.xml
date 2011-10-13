@@ -10,4 +10,7 @@
 	<string name="button_stop">Stop</string>
 	<string name="button_reset">Reset</string>
 
+	<string name="activity_title_results">Zapisane wyniki</string>
+	<string name="results">Wyniki</string>
+
 </resources>

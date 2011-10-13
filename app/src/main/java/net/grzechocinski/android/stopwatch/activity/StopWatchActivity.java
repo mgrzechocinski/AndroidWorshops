@@ -1,4 +1,4 @@
-package net.grzechocinski.android.stopwatch;
+package net.grzechocinski.android.stopwatch.activity;
 
 import android.app.Activity;
 import android.content.ComponentName;
@@ -6,12 +6,17 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
+import net.grzechocinski.android.stopwatch.R;
+import net.grzechocinski.android.stopwatch.StopWatchListener;
 import net.grzechocinski.android.stopwatch.service.StopwatchService;
 
 
@@ -61,6 +66,24 @@ public class StopWatchActivity extends Activity implements StopWatchListener, Se
 		stopService(service);
 		super.onBackPressed();
 	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater menuInflater = getMenuInflater();
+		menuInflater.inflate(R.menu.main, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onMenuItemSelected(int featureId, MenuItem item) {
+		switch(item.getItemId()){
+			case R.id.menu_results:
+				startActivity(new Intent(this, ResultsListActivity.class));
+				break;
+		}
+		return true;
+	}
+
 
 	public void onNewValue(long millis) {
 		SimpleDateFormat elapsedTimeFormatter = new SimpleDateFormat(PATTERN);
