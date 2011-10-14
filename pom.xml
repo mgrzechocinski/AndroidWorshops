@@ -29,7 +29,7 @@
 
 	<modules>
 		<module>app</module>
-		<module>test</module>
+		<!--<module>test</module>-->
 	</modules>
 
 	<build>
