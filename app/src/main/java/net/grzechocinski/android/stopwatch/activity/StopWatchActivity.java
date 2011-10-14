@@ -1,6 +1,5 @@
 package net.grzechocinski.android.stopwatch.activity;
 
-import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
@@ -19,30 +18,30 @@ import net.grzechocinski.android.stopwatch.StopWatchListener;
 import net.grzechocinski.android.stopwatch.service.StopwatchService;
 import net.grzechocinski.android.stopwatch.util.Color;
 import net.grzechocinski.android.stopwatch.util.Formatter;
+import roboguice.activity.RoboActivity;
+import roboguice.inject.InjectView;
 
 
 /**
  * @author mgrzechocinski@gmail.com
  * @since 13/10/2011
  */
-public class StopWatchActivity extends Activity implements StopWatchListener, ServiceConnection {
+public class StopWatchActivity extends RoboActivity implements StopWatchListener, ServiceConnection {
 
+	@InjectView(R.id.counter)
 	private TextView counter;
 
 	private StopwatchService stopwatchService;
 
+	@InjectView(R.id.button_start)
 	private Button startButton;
 
+	@InjectView(R.id.button_stop)
 	private Button stopButton;
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.count);
-
-		startButton = (Button) findViewById(R.id.button_start);
-		stopButton = (Button) findViewById(R.id.button_stop);
-
-		counter = (TextView) findViewById(R.id.counter);
 	}
 
 	private int loadColorFromPreferences() {

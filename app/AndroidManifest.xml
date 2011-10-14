@@ -8,6 +8,7 @@
 
 	<application android:label="@string/app_name"
 				 android:icon="@drawable/ic_app"
+				 android:name=".StopwatchApp"
 				 android:debuggable="true">
 
 		<activity android:name=".activity.StopWatchActivity">
