@@ -14,13 +14,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.TimeZone;
 import net.grzechocinski.android.stopwatch.R;
 import net.grzechocinski.android.stopwatch.StopWatchListener;
 import net.grzechocinski.android.stopwatch.service.StopwatchService;
 import net.grzechocinski.android.stopwatch.util.Color;
+import net.grzechocinski.android.stopwatch.util.Formatter;
 
 
 /**
@@ -30,8 +28,6 @@ import net.grzechocinski.android.stopwatch.util.Color;
 public class StopWatchActivity extends Activity implements StopWatchListener, ServiceConnection {
 
 	private TextView counter;
-
-	private static final String PATTERN = "HH:mm:ss";
 
 	private StopwatchService stopwatchService;
 
@@ -99,9 +95,7 @@ public class StopWatchActivity extends Activity implements StopWatchListener, Se
 
 
 	public void onNewValue(long millis) {
-		SimpleDateFormat elapsedTimeFormatter = new SimpleDateFormat(PATTERN);
-		elapsedTimeFormatter.setTimeZone(TimeZone.getTimeZone("UTC"));
-		counter.setText(elapsedTimeFormatter.format(new Date(millis)));
+		counter.setText(Formatter.formatElapsed(millis));
 	}
 
 	public void onServiceConnected(ComponentName componentName, IBinder service) {

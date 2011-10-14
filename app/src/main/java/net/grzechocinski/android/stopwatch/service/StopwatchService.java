@@ -1,14 +1,17 @@
 package net.grzechocinski.android.stopwatch.service;
 
 import android.app.Service;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.os.Binder;
 import android.os.IBinder;
 import android.util.Log;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import net.grzechocinski.android.stopwatch.StopWatch;
 import net.grzechocinski.android.stopwatch.StopWatchListener;
+import net.grzechocinski.android.stopwatch.provider.ResultsMetadata;
 import net.grzechocinski.android.stopwatch.util.Const;
 
 
@@ -41,7 +44,7 @@ public class StopwatchService extends Service implements StopWatchListener {
 	public class LocalBinder extends Binder {
 
 		public StopwatchService getService() {
-			return (StopwatchService) StopwatchService.this;
+			return StopwatchService.this;
 		}
 	}
 
@@ -65,7 +68,11 @@ public class StopwatchService extends Service implements StopWatchListener {
 	}
 
 	public void stop() {
-		stopWatch.stop();
+		long currentValue = stopWatch.stop();
+		ContentValues contentValues = new ContentValues();
+		contentValues.put(ResultsMetadata.ResultsTableMetaData.COLUMN_RESULT, currentValue);
+		contentValues.put(ResultsMetadata.ResultsTableMetaData.COLUMN_CREATED_DATE, new Date().getTime());
+		getContentResolver().insert(ResultsMetadata.ResultsTableMetaData.CONTENT_URI, contentValues);
 	}
 
 	@Override

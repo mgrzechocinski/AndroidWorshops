@@ -20,11 +20,14 @@ public class StopWatch {
 		this.listener = listener;
 	}
 
+	private long currentValue;
+
 	private Handler handler = new Handler() {
 		@Override
 		public void handleMessage(Message msg) {
 			long nowTimeStamp = new Date().getTime();
-			listener.onNewValue(nowTimeStamp - startTimestamp);
+			currentValue = nowTimeStamp - startTimestamp;
+			listener.onNewValue(currentValue);
 			handler.sendEmptyMessageDelayed(HEART_BEAT, 1000);
 		}
 	};
@@ -34,7 +37,8 @@ public class StopWatch {
 		handler.sendEmptyMessage(HEART_BEAT);
 	}
 
-	public void stop() {
+	public long stop() {
 		handler.removeMessages(HEART_BEAT);
+		return currentValue;
 	}
 }

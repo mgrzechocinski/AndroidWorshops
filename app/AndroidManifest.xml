@@ -19,6 +19,9 @@
 		<activity android:name=".activity.ResultsListActivity" android:label="@string/activity_title_results"/>
 		<activity android:name=".activity.StopwatchPreferenceActivity" android:label="@string/activity_title_preferences"/>
 		<service android:name=".service.StopwatchService"/>
+
+		<provider android:name=".provider.ResultsContentProvider"
+				  android:authorities="net.grzechocinski.android.stopwatch.provider.ResultsProvider"/>
 	</application>
 
     <uses-sdk android:minSdkVersion="7"/>
