@@ -29,6 +29,7 @@
 
 	<modules>
 		<module>app</module>
+		<module>test</module>
 	</modules>
 
 	<build>
@@ -83,12 +84,14 @@
 					</sdk>
 					<sign>
 						<!-- We use different, keytool-generated key to sign apk -->
-						<debug>false</debug>
+						<debug>true</debug>
 					</sign>
-					<device>emulator</device>
 					<emulator>
-						<avd>${emulator}</avd>
+						<avd>Emulator22</avd>
+						<wait>100000</wait>
+						<options>-no-skin</options>
 					</emulator>
+					<undeployBeforeDeploy>true</undeployBeforeDeploy>
 				</configuration>
 				<extensions>true</extensions>
 			</plugin>
@@ -150,6 +153,13 @@
 				<artifactId>acra</artifactId>
 				<version>4.2.3</version>
 			</dependency>
+			<dependency>
+				<groupId>com.google.android</groupId>
+				<artifactId>android-test</artifactId>
+				<version>2.2.1</version>
+				<scope>provided</scope>
+			</dependency>
+
 		</dependencies>
 	</dependencyManagement>
 
@@ -168,19 +178,6 @@
 		</dependency>
 	</dependencies>
 
-	<profiles>
-		<profile>
-			<id>noinstrument</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
-			<!-- any name, it's not used... -->
-			<properties>
-				<emulator>AndroidManifest1.5</emulator>
-			</properties>
-		</profile>
-	</profiles>
-
 	<repositories>
 		<repository>
 			<id>acra-releases</id>
@@ -192,5 +189,9 @@
 		<repo.url>git@github.com:mgrzechocinski/AndroidWorshops.git</repo.url>
 		<encoding.project>UTF-8</encoding.project>
 		<jdk.version>1.6</jdk.version>
+		<keystore.location>../market/my.keystore</keystore.location>
+		<keystore.password>test1234</keystore.password>
+		<keystore.keypass>test1234</keystore.keypass>
+		<keystore.alias>android_publish_key</keystore.alias>
 	</properties>
 </project>

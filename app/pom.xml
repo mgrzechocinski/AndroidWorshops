@@ -143,11 +143,4 @@
 		</profile>
 	</profiles>
 
-	<properties>
-		<keystore.location>../market/my.keystore</keystore.location>
-		<keystore.password>test1234</keystore.password>
-		<keystore.keypass>test1234</keystore.keypass>
-		<keystore.alias>android_publish_key</keystore.alias>
-	</properties>
-
 </project>
