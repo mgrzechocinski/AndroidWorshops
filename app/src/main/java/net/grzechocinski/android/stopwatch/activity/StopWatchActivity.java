@@ -39,9 +39,20 @@ public class StopWatchActivity extends RoboActivity implements StopWatchListener
 	@InjectView(R.id.button_stop)
 	private Button stopButton;
 
+	@InjectView(R.id.button_crash)
+	private Button crashButton;
+
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.count);
+
+		crashButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				throw new RuntimeException("My custom message");
+			}
+		});
+
 	}
 
 	private int loadColorFromPreferences() {

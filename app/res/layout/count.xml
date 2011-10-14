@@ -19,16 +19,23 @@
 				  android:orientation="horizontal">
 
 		<Button android:id="@+id/button_start"
-				android:text="Start"
+				android:text="@string/button_start"
 				android:layout_height="wrap_content"
 				android:layout_width="fill_parent"
 				android:layout_weight="1"/>
 
 		<Button android:id="@+id/button_stop"
-				android:text="Stop"
+				android:text="@string/button_stop"
 				android:layout_height="wrap_content"
 				android:layout_width="fill_parent"
 				android:layout_weight="1"/>
+
+		<Button android:id="@+id/button_crash"
+				android:text="Crash!"
+				android:layout_height="wrap_content"
+				android:layout_width="fill_parent"
+				android:layout_weight="1"/>
+
 
 	</LinearLayout>
 
