@@ -1,10 +1,12 @@
 package net.grzechocinski.android.stopwatch.activity;
 
+import android.R;
 import android.app.ListActivity;
+import android.content.ContentResolver;
+import android.database.Cursor;
 import android.os.Bundle;
-import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
-import java.util.Arrays;
+import android.provider.Settings;
+import android.widget.SimpleCursorAdapter;
 
 
 /**
@@ -13,12 +15,17 @@ import java.util.Arrays;
  */
 public class ResultsListActivity extends ListActivity {
 
-	private ListAdapter adapter;
-
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,
-				Arrays.asList("aaa", "bbbb", "ccc", "dddd", "aaa", "bbbb", "ccc", "dddd", "aaa", "bbbb", "ccc", "dddd"));
+
+		ContentResolver contentResolver = getContentResolver();
+
+		Cursor cursor = managedQuery(Settings.System.CONTENT_URI, null, null, null, null);
+		// Get the list view
+		String[] from = {Settings.System.NAME, Settings.System.VALUE};
+		int[] displayViews = new int[]{android.R.id.text1, android.R.id.text2};
+
+		SimpleCursorAdapter adapter = new SimpleCursorAdapter(this, R.layout.simple_list_item_2, cursor, from, displayViews);
 		setListAdapter(adapter);
 	}
 }
