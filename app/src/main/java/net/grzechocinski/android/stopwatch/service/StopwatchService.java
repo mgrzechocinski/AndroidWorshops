@@ -1,18 +1,16 @@
 package net.grzechocinski.android.stopwatch.service;
 
 import android.app.Service;
-import android.content.ContentValues;
 import android.content.Intent;
 import android.os.Binder;
 import android.os.IBinder;
 import android.util.Log;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import net.grzechocinski.android.stopwatch.StopWatch;
 import net.grzechocinski.android.stopwatch.StopWatchListener;
-import net.grzechocinski.android.stopwatch.provider.ResultsMetadata;
 import net.grzechocinski.android.stopwatch.util.Const;
+import net.grzechocinski.android.stopwatch.widget.StopwatchWidget;
 
 
 /**
@@ -54,7 +52,7 @@ public class StopwatchService extends Service implements StopWatchListener {
 	public void onCreate() {
 		super.onCreate();
 		Log.d(LOG_TAG, "onCreate()");
-		stopWatch = new StopWatch(this);
+		stopWatch = new StopWatch(this, this);
 	}
 
 	@Override
@@ -68,15 +66,21 @@ public class StopwatchService extends Service implements StopWatchListener {
 	}
 
 	public void stop() {
-		long currentValue = stopWatch.stop();
-		ContentValues contentValues = new ContentValues();
-		contentValues.put(ResultsMetadata.ResultsTableMetaData.COLUMN_RESULT, currentValue);
-		contentValues.put(ResultsMetadata.ResultsTableMetaData.COLUMN_CREATED_DATE, new Date().getTime());
-		getContentResolver().insert(ResultsMetadata.ResultsTableMetaData.CONTENT_URI, contentValues);
+		stopWatch.stop();
 	}
 
 	@Override
 	public IBinder onBind(Intent intent) {
 		return localServiceBinder;
+	}
+
+	@Override
+	public int onStartCommand(Intent intent, int flags, int startId) {
+		Log.d(LOG_TAG, "onStartCommand()");
+		String action = intent.getAction();
+		if (StopwatchWidget.ACTION_STOPWATCH_TOGGLE_START_STOP.equals(action)) {
+			stopWatch.toggleStartStop(this);
+		}
+		return START_STICKY;
 	}
 }

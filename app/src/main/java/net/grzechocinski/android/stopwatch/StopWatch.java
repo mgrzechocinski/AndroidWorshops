@@ -1,8 +1,15 @@
 package net.grzechocinski.android.stopwatch;
 
+import android.content.ContentValues;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
+import android.widget.Toast;
 import java.util.Date;
+import net.grzechocinski.android.stopwatch.provider.ResultsMetadata;
+import net.grzechocinski.android.stopwatch.util.Formatter;
+import net.grzechocinski.android.stopwatch.widget.StopwatchWidget;
 
 /**
  * @author mateusz.grzechocinski@gmail.com
@@ -14,9 +21,14 @@ public class StopWatch {
 
 	private long startTimestamp;
 
+	private Context ctx;
+
 	private StopWatchListener listener;
 
-	public StopWatch(StopWatchListener listener) {
+	private boolean started;
+
+	public StopWatch(Context ctx, StopWatchListener listener) {
+		this.ctx = ctx;
 		this.listener = listener;
 	}
 
@@ -35,10 +47,30 @@ public class StopWatch {
 	public void start() {
 		startTimestamp = new Date().getTime();
 		handler.sendEmptyMessage(HEART_BEAT);
+		started = true;
 	}
 
-	public long stop() {
+	public void stop() {
 		handler.removeMessages(HEART_BEAT);
-		return currentValue;
+		started = false;
+		ContentValues contentValues = new ContentValues();
+		contentValues.put(ResultsMetadata.ResultsTableMetaData.COLUMN_RESULT, currentValue);
+		contentValues.put(ResultsMetadata.ResultsTableMetaData.COLUMN_CREATED_DATE, new Date().getTime());
+		ctx.getContentResolver().insert(ResultsMetadata.ResultsTableMetaData.CONTENT_URI, contentValues);
+	}
+
+	public boolean isStarted() {
+		return started;
+	}
+
+	public void toggleStartStop(Context ctx) {
+		if (isStarted()) {
+			stop();
+			Toast.makeText(ctx, Formatter.formatElapsed(currentValue), Toast.LENGTH_SHORT).show();
+			ctx.sendBroadcast(new Intent(StopwatchWidget.ACTION_WIDGET_SET_START));
+		} else {
+			start();
+			ctx.sendBroadcast(new Intent(StopwatchWidget.ACTION_WIDGET_SET_STOP));
+		}
 	}
 }

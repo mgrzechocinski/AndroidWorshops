@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="net.grzechocinski.android.stopwatch"
-          android:versionCode="1"
-          android:versionName="${project.version}">
+		  package="net.grzechocinski.android.stopwatch"
+		  android:versionCode="1"
+		  android:versionName="${project.version}">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+	<uses-permission android:name="android.permission.INTERNET"/>
 
-    <application android:label="@string/app_name"
-                 android:icon="@drawable/ic_app"
-                 	android:debuggable="true">
+	<application android:label="@string/app_name"
+				 android:icon="@drawable/ic_app"
+				 android:debuggable="true">
 
 		<activity android:name=".activity.StopWatchActivity">
 			<intent-filter>
@@ -20,10 +20,22 @@
 		<activity android:name=".activity.StopwatchPreferenceActivity" android:label="@string/activity_title_preferences"/>
 		<service android:name=".service.StopwatchService"/>
 
+		<receiver android:name=".widget.StopwatchWidget">
+			<intent-filter>
+				<action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+				<action android:name="net.grzechocinski.android.stopwatch.ACTION_SET_START"/>
+				<action android:name="net.grzechocinski.android.stopwatch.ACTION_SET_LOCKED"/>
+				<action android:name="net.grzechocinski.android.stopwatch.ACTION_SET_STOP"/>
+			</intent-filter>
+			<meta-data
+					android:name="android.appwidget.provider"
+					android:resource="@xml/widget_provider"/>
+		</receiver>
+
 		<provider android:name=".provider.ResultsContentProvider"
-				  android:authorities="net.grzechocinski.android.stopwatch.provider.ResultsProvider"/>
+				  android:authorities="net.grzechocinski.android.stopwatch.provider.ResultsProvider" />
 	</application>
 
-    <uses-sdk android:minSdkVersion="7"/>
+	<uses-sdk android:minSdkVersion="7"/>
 
 </manifest>
